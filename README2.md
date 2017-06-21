@@ -17,6 +17,7 @@ $$S=Fw$$.
 1. $S$ and $F$ is known, $w$ should be calculated with a reasonable solver, which in the paper is a non-negative L1-regularized least-squared problem:
 $$(Sparse)\;\;\;\min \left\{ {\left\| {S - Fw} \right\|_2^2 + \beta {{\left\| w \right\|}_1}} \right\}\;s.t.\;w \ge 0$$, where $\beta$ is a tuning parameter.
 
+The following table shows the steps to solve this problem.
    | step | operate
    |---|---|
    | 1 | Initialize $w=0$ and active set = {}. |
@@ -38,6 +39,11 @@ $$(Sparse)\;\;\;\min \left\{ {\left\| {S - Fw} \right\|_2^2 + \beta {{\left\| w 
    | 17 | Goto step 2
    | 18 | end if|
 
+3. There are some key parameters to initialize.
+ 
+   - The number of orientations to construct $F$, in this paper, they used 321 directions.
+   - The eigenvalues of $D_j$, they set them seperately as $\lambda_1=1.5\times10^{-3}mm^2/s $ and $\lambda_2 = \lambda_3=3\times10^{-4}mm^2/s$
+   - $b=2000s/mm^2$
 
 [^1]: Yap, P.T., Shen, D., 2012. Spatial transformation of DWI data using non-negative sparse representation. IEEE Trans. Med. Imaging 31, 2035–2049. doi:10.1109/TMI.2012.2204766
  
