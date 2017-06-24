@@ -9,10 +9,11 @@ func2 = @(k) exp(-2000*k*D1*k');  % single fiber along x-axis
 func3 = @(k) exp(-2000*k*D2*k'); % signle fiber along y-axis
 func4 = @(k) exp(-2000*k*D3*k'); % isotropic diffusion
 
-S1 = 150*getSample(filename1, func1);
-S2 = 150*getSample(filename1, func2);
-S3 = 150*getSample(filename1, func3);
-S4 = 150*getSample(filename1, func4);
+S0 = 150;
+S1 = [S0; S0*getSample(filename1, func1)];
+S2 = [S0; S0*getSample(filename1, func2)];
+S3 = [S0; S0*getSample(filename1, func3)];
+S4 = [S0; S0*getSample(filename1, func4)];
 
 
 sample3D_1 = repmat(reshape(S4, 1, 1, []), 16, 16);
@@ -64,7 +65,7 @@ fprintf(fid1, '%f\t', bvec(:, 3));
 fclose(fid1);
 
 fid2 = fopen('ori.bval', 'w+');
-fprintf(fid2, '%d\t', [0, ones(1, size(bvec, 1))*2000]);
+fprintf(fid2, '%d\t', [0, ones(1, size(bvec, 1) - 1)*2000]);
 fclose(fid2);
 
 
