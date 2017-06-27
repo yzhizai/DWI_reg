@@ -2,10 +2,6 @@ function F = getDBFmatrix(oriReal, Aff)
 % Input:
 %   oriReal - the gradient directions of acquiring the dwi images, which size is 3*N
 
-% Initialize parameters
-lambda1 = 1.5*10^-3;
-lambda2 = 3*10^-4;
-
 ori300 = load('Grad_dirs_300.txt');
 if size(ori300, 1) > size(ori300, 2)
     ori300 = ori300';
@@ -19,7 +15,8 @@ if nargin > 1
 end
 bval = 2000;
 oriBmatrix = bval_bvec_to_matrix(bval*ones(1, size(oriReal, 2)), oriReal);
-
+lambda1 = 1.5*10^-3;
+lambda2 = 3*10^-4;
 F = zeros(size(oriBmatrix, 1), size(ori300, 2));
 
 for aa = 1:size(ori300, 2)

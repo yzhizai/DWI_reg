@@ -52,8 +52,6 @@ create(ni);
 ni.dat(:, :, :) = ones(16, 16, 1);
 
 %% Generate bval and bvec file
-filename1 = spm_select(1, 'mat');
-
 bvec = load(filename1);
 bvec = cat(1, [0, 0, 0], bvec);
 fid1 = fopen('ori.bvec', 'w+');
@@ -68,7 +66,7 @@ fid2 = fopen('ori.bval', 'w+');
 fprintf(fid2, '%d\t', [0, ones(1, size(bvec, 1) - 1)*2000]);
 fclose(fid2);
 
-
+clear all;
 
 
 
