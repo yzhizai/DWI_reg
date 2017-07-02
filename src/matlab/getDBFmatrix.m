@@ -1,6 +1,7 @@
-function F = getDBFmatrix(oriReal, Aff)
-% Input:
-%   oriReal - the gradient directions of acquiring the dwi images, which size is 3*N
+function F = getDBFmatrix(oriBmatrix, Aff)
+% Input: oriBmatrix = bval_bvec_to_matrix(bval*ones(1, size(oriReal, 2)), oriReal);
+%   oriReal - the gradient directions of acquiring the dwi images, which
+%   size is 3*N, including b0 direction. 
 
 % Initialize parameters
 lambda1 = 1.5*10^-3;
@@ -17,8 +18,8 @@ if nargin > 1
         ori300(:, bb) = ori300(:, bb)/norm(ori300(:, bb));
     end
 end
-bval = 2000;
-oriBmatrix = bval_bvec_to_matrix(bval*ones(1, size(oriReal, 2)), oriReal);
+% Get bval from B-matrix.
+bval = round(sum(oriBmatrix(3, [1, 4, 6])));
 
 F = zeros(size(oriBmatrix, 1), size(ori300, 2));
 
