@@ -12,6 +12,7 @@ if size(ori300, 1) > size(ori300, 2)
     ori300 = ori300';
 end
 
+Aff = Aff(1:3, 1:3); % 4*4 to 3*3
 if nargin > 1
     ori300 = Aff*ori300;
     for bb = 1:size(ori300, 2)

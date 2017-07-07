@@ -10,8 +10,7 @@ if size(oriReal, 1) > size(oriReal, 2)
     oriReal  = oriReal';
 end
 bval = 2000;
-bmatrix = bval_bvec_to_matrix(bval * ones(1, (size(oriReal, 2) + 1)), ...
-    cat(2, zeros(3, 1), oriReal));
+bmatrix = bval_bvec_to_matrix(bval * ones(1, size(oriReal, 2)), oriReal);
 
 wFile = spm_select(1, 'nii', 'choose the transformed weight image');
 
@@ -29,7 +28,9 @@ S_reg_cell = cellfun(@(x) reshape(x, 1, 1, 1, []), S_reg_cell, 'UniformOutput', 
 S_reg = reshape(cat(1, S_reg_cell{:}), size(wMat, 1), size(wMat, 2), size(wMat, 3), []);
 
 ni = nifti;
-ni.dat = file_array('reg_dwi.nii', ...
+fname = inputdlg({'output filename'}, 'give output file name');
+fname = fname{1};
+ni.dat = file_array(fname, ...
     size(S_reg), [spm_type('float32'), spm_platform('bigend')]);
 
 ni.mat = wV(1).mat;

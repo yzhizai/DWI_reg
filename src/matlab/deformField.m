@@ -12,10 +12,15 @@ end
 
 ni = nifti;
 ni.dat = file_array('y_deform.nii', ...
-    [VG.dim, 1, 3], [spm_type('float32'), spm_platform('bigend')]);
+    [VG.dim, 1, 3], 'FLOAT32-LE');
 
 ni.mat = diag([2, 2, 2, 1]);
 ni.mat0 = diag([2, 2, 2, 1]);
+ni.mat_intent = 'Aligned';
+ni.mat0_intent = 'Aligned';
+ni.intent.code = 'VECTOR';
+ni.intent.name = 'Mapping';
+ni.descrip = 'Deformation field';
 create(ni);
 
 for bb = 1:3
