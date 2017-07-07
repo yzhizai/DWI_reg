@@ -4,13 +4,20 @@ function dwi_reg_demo
 Aff_init = rotationVectorToMatrix(pi/12*[0, 0, 1]);
 Aff = eye(4);
 Aff(1:3, 1:3) = Aff_init;
+
 % Obtain the real diffusion gradient directions
-oriReal = load(spm_select(1, 'bvec', 'the diffusion direction file'));
-if size(oriReal, 1) > size(oriReal, 2)
-    oriReal  = oriReal';
+bvecFile = spm_select(1, 'bvec', 'bvec');
+bvalFile = spm_select(1, 'bval', 'bval');
+bvec = load(bvecFile);
+bval = load(bvalFile);
+if size(bvec, 1) > size(bvec, 2)
+    bvec = bvec';
 end
-bval = 2000;
-bmatrix = bval_bvec_to_matrix(bval * ones(1, size(oriReal, 2)), oriReal);
+if size(bval, 1) > size(bval, 2)
+    bval = bval';
+end
+
+bmatrix = bval_bvec_to_matrix(bval, bvec);
 
 wFile = spm_select(1, 'nii', 'choose the transformed weight image');
 
@@ -19,7 +26,8 @@ wMat = spm_read_vols(wV);
 
 wMat_cell = mat2cell(wMat, ones(1, size(wMat, 1)), ones(1, size(wMat, 2)), ...
     ones(1, size(wMat, 3)), size(wMat, 4));
-F = getDBFmatrix(bmatrix, Aff);
+% F = getDBFmatrix(bmatrix, Aff);
+F = getDBFmatrix(bmatrix);
 
 S_reg_cell = cellfun(@(x) F*x(:), wMat_cell, 'UniformOutput', false);
 
