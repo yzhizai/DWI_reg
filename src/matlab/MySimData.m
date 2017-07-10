@@ -1,5 +1,5 @@
 %% simulated data
-filename1 = spm_select(1, 'mat');
+filename1 = spm_select(1, 'mat'); % choose the pure direction file, such as Grad_dirs_60.txt
 D1 = (1.5 - 0.3)*10^-3*([1, 0, 0]'*[1, 0, 0]) + 0.3*10^-3*eye(3);
 D2 = (1.5 - 0.3)*10^-3*([0, 1, 0]'*[0, 1, 0]) + 0.3*10^-3*eye(3);
 D3 = 1.5*10^-3*eye(3);

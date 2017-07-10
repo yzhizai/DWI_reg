@@ -1,5 +1,6 @@
 function dwi_reg_demo
 
+n_b0 = 1;
 % Generate the affine matrix
 Aff_init = rotationVectorToMatrix(pi/12*[0, 0, 1]);
 Aff = eye(4);
@@ -18,6 +19,7 @@ if size(bval, 1) > size(bval, 2)
 end
 
 bmatrix = bval_bvec_to_matrix(bval, bvec);
+bmatrix = bmatrix((n_b0 + 1):end, :);
 
 wFile = spm_select(1, 'nii', 'choose the transformed weight image');
 
@@ -34,6 +36,8 @@ S_reg_cell = cellfun(@(x) F*x(:), wMat_cell, 'UniformOutput', false);
 S_reg_cell = cellfun(@(x) reshape(x, 1, 1, 1, []), S_reg_cell, 'UniformOutput', false);
 
 S_reg = reshape(cat(1, S_reg_cell{:}), size(wMat, 1), size(wMat, 2), size(wMat, 3), []);
+
+
 
 ni = nifti;
 fname = inputdlg({'output filename'}, 'give output file name');
