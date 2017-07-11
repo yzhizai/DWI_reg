@@ -24,12 +24,7 @@ F = getDBFmatrix(bmatrix);
 % eliminate the row corresponding to b0 volume
 S = S(:, :, :, (n_b0 + 1):end);
 
-% Obtain the weight matrix
-wCell = cellfun(@(x) lsqnonneg(F, reshape(x, [], 1)), ...
-    mat2cell(S, ones(1, V(1).dim(1)), ones(1, V(1).dim(2)), ones(1, V(1).dim(3)), size(S, 4)), ...
-    'UniformOutput', false);
-wMat = cellfun(@(x) reshape(x, 1, 1, 1, []), wCell, 'UniformOutput', false);
-wMat = reshape(cat(1, wMat{:}), V(1).dim(1), V(1).dim(2), V(1).dim(3), []);
+wMat = getWeight(S, F);
 
 fname = inputdlg({'weight file name'}, 'output file name');
 fname = fname{1};
