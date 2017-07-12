@@ -17,8 +17,8 @@ S4 = [S0; S0*getSample(filename1, func4)];
 
 
 sample3D_1 = repmat(reshape(S4, 1, 1, []), 16, 16);
-sample3D_2 = repmat(reshape(S2, 1, 1, []), 4, 14);
-sample3D_3 = repmat(reshape(S3, 1, 1, []), 14, 4);
+sample3D_2 = repmat(reshape(S3, 1, 1, []), 4, 14);
+sample3D_3 = repmat(reshape(S2, 1, 1, []), 14, 4);
 sample3D_4 = repmat(reshape(S1, 1, 1, []), 4, 4);
 
 sample3D = sample3D_1;

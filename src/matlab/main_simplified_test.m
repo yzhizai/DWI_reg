@@ -65,7 +65,6 @@ wMat_cell  = mat2cell(wMat_trans, ones(1, size(wMat_trans, 1)), ones(1, size(wMa
 
 F          = getDBFmatrix(bmatrix, n_b0, Aff);
 
-
 % reconstruct the data into standard space.
 S_reg_cell = cellfun(@(x) F*x(:), wMat_cell, 'UniformOutput', false);
 
