@@ -6,5 +6,6 @@ func = varargin{2};
 S = zeros(size(diff_ori, 1), 1);
 for aa = 1:size(diff_ori, 1)
     k = diff_ori(aa, :);
+    k = k(1, [2, 1, 3]);
     S(aa) = func(k);
 end

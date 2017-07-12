@@ -1,4 +1,4 @@
-function main_simpified
+function main_simplified_test
 
 %% Choose the dwi image and diffeofield file
 dwiFile        = spm_select(1, 'nii', 'choose the diffusion MRI data');
@@ -10,7 +10,7 @@ diffeoFile     = spm_select(1, '^y_.*nii$', 'choose the deformation file');
 %% Affine matrix
 % Aff = rotationVectorToMatrix(pi/12*[0, 0, 1]);
 Aff = eye(3);
-Aff(1, 2) = 0.5;
+% Aff(1, 2) = 0.5;
 
 %% Fit DBFs and get n_b0
 bvecFile = spm_select(1, 'bvec', 'bvec');
@@ -63,7 +63,8 @@ wMat_cell  = mat2cell(wMat_trans, ones(1, size(wMat_trans, 1)), ones(1, size(wMa
 %% For each voxel, affine matrix is unique, which is obtained from jacobian 
 % detminant of deformation field.
 
-F         = getDBFmatrix(bmatrix, n_b0, Aff);
+F          = getDBFmatrix(bmatrix, n_b0, Aff);
+
 
 % reconstruct the data into standard space.
 S_reg_cell = cellfun(@(x) F*x(:), wMat_cell, 'UniformOutput', false);

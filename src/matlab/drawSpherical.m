@@ -11,7 +11,7 @@ AA = map({theta_m, phi_m}, Y, 'UniformOutput', false);
 SHfile = spm_select(1, 'nii');
 coefMat = spm_read_vols(spm_vol(SHfile));
 
-clf
+figure;
 for bb = 1:16
     for cc = 1:16
         coef1 = reshape(coefMat(cc, bb, 1, :), [], 1);
