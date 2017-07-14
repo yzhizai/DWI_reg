@@ -14,7 +14,8 @@ JCell = mat2cell(J, ones(1, size(J, 1)), ones(1, size(J, 2)), ones(1, size(J, 3)
     size(J, 4));
 RCell = cellfun(@jac2R, JCell, 'UniformOutput', false);
 RCell = cellfun(@(x) reshape(x, 1, 1, 1, []), RCell, 'UniformOutput', false);
-RMat = reshape(cat(1, RCell{:}), size(J, 1), size(J, 2), size(J, 3), []);
+RMat = reshape(cat(1, RCell{:}), size(J, 1), size(J, 2), size(J, 4
+
 %% Fit DBFs and get n_b0
 bvecFile = spm_select(1, 'bvec', 'bvec');
 bvalFile = spm_select(1, 'bval', 'bval');

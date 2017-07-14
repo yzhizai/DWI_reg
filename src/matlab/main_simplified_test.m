@@ -10,7 +10,7 @@ diffeoFile     = spm_select(1, '^y_.*nii$', 'choose the deformation file');
 %% Affine matrix
 % Aff = rotationVectorToMatrix(pi/12*[0, 0, 1]);
 Aff = eye(3);
-% Aff(1, 2) = 0.5;
+Aff(1, 2) = 0.5;
 
 %% Fit DBFs and get n_b0
 bvecFile = spm_select(1, 'bvec', 'bvec');
