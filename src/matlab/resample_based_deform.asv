@@ -1,4 +1,4 @@
-function Y_reg = resample_based_deform(VF, Y_ori, Def)
+function Y_reg = resample_based_deform(VF,Y_ori, Def)
 % This file is used to resample the data from VF to VG.
 % Input:
 %   VF - just used to provide the VF(1).mat
