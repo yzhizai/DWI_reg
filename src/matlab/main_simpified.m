@@ -52,11 +52,11 @@ for aa = 1:size(ni.dat, 4)
     ni.dat(:, :, :, aa) = wMat(:, :, :, aa);
 end
 %% Transform b0 volumes
-b0_trans   = resample_based_deform(VF_dwi(1:n_b0), Def);
+b0_trans   = resample_based_deform(VF_dwi(1:n_b0), [], Def);
 % transform wMat 
 VF_wmat    = spm_vol(fname);
 
-wMat_trans = resample_based_deform(VF_wmat, Def);
+wMat_trans = resample_based_deform(VF_wmat, wMat, Def);
 wMat_cell  = mat2cell(wMat_trans, ones(1, size(wMat_trans, 1)), ones(1, size(wMat_trans, 2)), ...
     ones(1, size(wMat_trans, 3)), size(wMat_trans, 4));
 

@@ -7,11 +7,11 @@ activeSet = [];
 
 while true
     delObj = -2*F'*(S - F*w);
-    [minVal, idx] = min(delObj);
-
+    minVal = max(delObj);
+    idx = find(delObj == minVal);
     if minVal < -1*beta
         activeSet = union(activeSet, idx);
-        w(idx) = 1;
+        w(idx) = 1; % this w(idx) should be assigned with 0+
     else
         return;
     end
@@ -24,12 +24,9 @@ while true
         sign_vec = w_hat.*w_new;
         
         if sum(sign_vec < 0)
-            L = find(w_new < 0);
-            ratio_to0 = w_hat(L)./(w_hat(L) - w_new(L));
-            [maxV, maxL] = max(ratio_to0);
-            w_hat = w_hat - (w_hat - w_new)*maxV;
+            w_hat = toNew(w_hat, w_new);
             w(activeSet) = w_hat;
-            activeSet(maxL) = [];
+            activeSet(w_hat == 0) = [];
         else
             break;
         end   
@@ -37,4 +34,9 @@ while true
 end
 
 
-
+function CC = toNew(AA, BB)
+dirToP      = AA - BB;
+dirTo0      = AA;
+rat_0_and_P = dirTo0./dirToP;
+maxV        = min(rat_0_and_P(BB < 0));
+CC          = AA - dirToP*maxV;

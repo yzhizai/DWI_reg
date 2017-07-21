@@ -1,8 +1,9 @@
 function Y_reg = resample_based_deform(VF, Y_ori, Def)
 % This file is used to resample the data from VF to VG.
 % Input:
-%   VF - just used to provide the VF(1).mat
-%   diffeofile - the filename of diffeofile prefixed with "y_".
+%   VF - just using the provide the VF(1).mat
+%   Y_ori - the subj image matrix used to transform.
+%   Def - the deformation matrix.
 
 M     = inv(VF(1).mat);
 if isempty(Y_ori)
