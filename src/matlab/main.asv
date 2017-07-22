@@ -64,21 +64,20 @@ end
 b0_trans   = resample_based_deform(VF_dwi(1:n_b0), [], Def);
 % transform wMat 
 wMat_trans = resample_based_deform(VF_dwi(1), wMat, Def);
-[sizeX, sizeY, sizeZ, sizeS] = size(wMat_trans);
-wMat_trans_cell  = mat2cell(wMat_trans, ones(1, sizeX), ones(1, sizeY), ...
-    ones(1, sizeZ), sizeS);
+[sizeX, sizeY, sizeZ, sizeS] = size(wMat
+wMat_trans_cell  = mat2cell(wMat_trans, ones(1, size(wMat_trans, 1)), ones(1, size(wMat_trans, 2)), ...
+    ones(1, size(wMat_trans, 3)), size(wMat_trans, 4));
 
 %% For each voxel, affine matrix is unique, which is obtained from jacobian 
 % clear workspace
-clearvars wMat wMat_trans
+clearvars wMat
 
 
 % reconstruct the data into standard space.
 
 S_reg_cell = cellfun(@(x, y)compose_signal(bmatrix, n_b0, x, y),RCell, wMat_trans_cell, 'UniformOutput', false);
-clearvars RCell wMat_trans_cell
 S_reg_cell = cellfun(@(x) reshape(x, 1, 1, 1, []), S_reg_cell, 'UniformOutput', false);
-S_reg      = reshape(cat(1, S_reg_cell{:}), sizeX, sizeY, sizeZ, sizeS);
+S_reg      = reshape(cat(1, S_reg_cell{:}), size(wMat_trans, 1), size(wMat_trans, 2), size(wMat_trans, 3), []);
 S_reg      = cat(4, b0_trans, S_reg);
 
 ni     = nifti;
