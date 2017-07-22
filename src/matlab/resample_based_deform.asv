@@ -16,8 +16,9 @@ tmp(:,:,:,1) = M(1,1)*Def(:,:,:,1)+M(1,2)*Def(:,:,:,2)+M(1,3)*Def(:,:,:,3)+M(1,4
 tmp(:,:,:,2) = M(2,1)*Def(:,:,:,1)+M(2,2)*Def(:,:,:,2)+M(2,3)*Def(:,:,:,3)+M(2,4);
 tmp(:,:,:,3) = M(3,1)*Def(:,:,:,1)+M(3,2)*Def(:,:,:,2)+M(3,3)*Def(:,:,:,3)+M(3,4);
 
-Y_reg = zeros(size(Def, 1), size(Def, 2), size(Def, 3), numel(VF));
+Y_reg = zeros(size);
 for aa = 1:size(Y_ori, 4)
-    c                  = spm_diffeo('bsplinc', single(Y_ori(:, :, :, aa)), [3 3 3 0 0 0]);         
-    Y_reg(:, :, :, aa) = spm_diffeo('bsplins', c, tmp, [3 3 3 0 0 0]);
+    c                  = spm_diffeo('bsplinc', single(Y_ori(:, :, :, aa)), [3 3 3 0 0 0]);
+    Y_temp             = spm_diffeo('bsplins', c, tmp, [3 3 3 0 0 0]);
+    Y_reg(:, :, :, aa) = Y_temp;
 end

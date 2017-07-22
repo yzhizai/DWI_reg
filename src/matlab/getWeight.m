@@ -3,7 +3,7 @@ function wMat = getWeight(S, F)
 %   S - the datamatrix without b0
 %   F - the DBF matrix
 [dim1, dim2, dim3, dim4] = size(S);
-Obtain the weight matrix
+% Obtain the weight matrix
 wCell = cellfun(@(x) lsqnonneg(F, reshape(x, [], 1)), ...
     mat2cell(S, ones(1, dim1), ones(1, dim2), ones(1, dim3), dim4), ...
     'UniformOutput', false);

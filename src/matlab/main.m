@@ -2,14 +2,19 @@ function main
 
 %% Choose the dwi image and diffeofield file
 dwiFile        = spm_select(1, 'nii', 'choose the diffusion MRI data');
-diffeoFile     = spm_select(1, '^y_.*nii$', 'choose the deformation file');
-[Def, mat]     = get_def(diffeoFile);
 [pat, ~, ~, ~] = spm_fileparts(dwiFile);
+diffeoFile     = spm_select(1, '^y_.*nii$', 'choose the deformation file', {}, pat);
+bvecFile = spm_select(1, 'bvec', 'bvec', {}, pat);
+bvalFile = spm_select(1, 'bval', 'bval', {}, pat);
+
+[Def, mat]     = get_def(diffeoFile);
+
 
 
 %% Affine matrix
 % Aff = rotationVectorToMatrix(pi/12*[0, 0, 1]);
 J = spm_diffeo('def2jac', Def);
+J = reshape(J, size(J, 1), size(J, 2), size(J, 3), []); 
 JCell = mat2cell(J, ones(1, size(J, 1)), ones(1, size(J, 2)), ones(1, size(J, 3)), ...
     size(J, 4));
 RCell = cellfun(@jac2R, JCell, 'UniformOutput', false); % each element is a 3*3 matrix.
@@ -18,8 +23,7 @@ RCell = cellfun(@jac2R, JCell, 'UniformOutput', false); % each element is a 3*3 
 
 
 %% Fit DBFs and get n_b0
-bvecFile = spm_select(1, 'bvec', 'bvec');
-bvalFile = spm_select(1, 'bval', 'bval');
+
 bvec     = load(bvecFile);
 bval     = load(bvalFile);
 if size(bvec, 1) > size(bvec, 2)
