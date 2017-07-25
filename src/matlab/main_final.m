@@ -114,5 +114,6 @@ for aa = 1:size(ni.dat, 4)
     ni.dat(:, :, :, aa) = S_reg(:, :, :, aa);
 end
 function S =  compose_signal(bmatrix, n_b0, Aff, w)
+Aff = reshape(Aff, 3, 3);
 F          = getDBFmatrix(bmatrix, n_b0, Aff);
 S          = F*w(:);
