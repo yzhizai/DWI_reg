@@ -2,7 +2,7 @@ function main_final
 
 %% Choose the dwi image and diffeofield file
 dwiFile        = spm_select(1, 'nii', 'choose the diffusion MRI data');
-[pat, ~, ~, ~] = spm_fileparts(dwiFile);
+[pat, tit, ~, ~] = spm_fileparts(dwiFile);
 diffeoFile     = spm_select(1, '^y_.*nii$', 'choose the deformation file', {}, pat);
 bvecFile = spm_select(1, 'bvec', 'bvec', {}, pat);
 bvalFile = spm_select(1, 'bval', 'bval', {}, pat);
@@ -98,10 +98,10 @@ clearvars RCell wMat_trans_cell
 S_reg_cell = cellfun(@(x) reshape(x, 1, 1, 1, []), S_reg_cell, 'UniformOutput', false);
 S_reg      = reshape(cat(1, S_reg_cell{:}), sizeX, sizeY, sizeZ, []);
 S_reg      = cat(4, b0_trans, S_reg);
+S_reg(isnan(S_reg)) = 0;
 
 ni     = nifti;
-fname  = inputdlg({'output filename'}, 'give output file name');
-fname  = fullfile(pat, fname{1});
+fname  = fullfile(pat, ['w', tit, ext]);
 ni.dat = file_array(fname, ...
     size(S_reg), [spm_type('float32'), spm_platform('bigend')]);
 
