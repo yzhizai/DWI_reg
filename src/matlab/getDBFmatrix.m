@@ -15,14 +15,11 @@ uniformOrientationFilePath = 'F:\Documents\GitHub\DWI_reg\src\matlab\Grad_dirs_3
 lambda1 = 1.5*10^-3;
 lambda2 = 3*10^-4;
 
+
 ori300 = load(uniformOrientationFilePath);
 if size(ori300, 1) > size(ori300, 2)
     ori300 = ori300';
 end
-
-ori300 = ori300([2, 1, 3], :);
-
-oriBmatrix(1:n_b0, :) = [];
 
 if nargin > 2
     Aff = Aff(1:3, 1:3); % 4*4 to 3*3
@@ -31,6 +28,12 @@ if nargin > 2
         ori300(:, bb) = ori300(:, bb)/norm(ori300(:, bb));
     end
 end
+
+ori300 = ori300([2, 1, 3], :);
+
+oriBmatrix(1:n_b0, :) = [];
+
+
 % Get bval from B-matrix.
 bval = round(sum(oriBmatrix(3, [1, 4, 6])));
 

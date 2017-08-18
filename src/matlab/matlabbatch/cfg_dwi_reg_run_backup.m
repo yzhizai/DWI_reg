@@ -1,32 +1,19 @@
-function main_final(dwiFile, diffeoFile, bvecFile, bvalFile)
+function out = cfg_dwi_reg_run(job)
 
-%% Choose the dwi image and diffeofield file
-% dwiFile        = spm_select(1, 'nii', 'choose the diffusion MRI data');
+dwiFile = job.dwiFile{1};
+diffeoFile = job.defFile{1};
+bvecFile = job.bvecFile{1};
+bvalFile = job.bvalFile{1};
+
 [pat, tit, ext, ~] = spm_fileparts(dwiFile);
-% diffeoFile     = spm_select(1, '^y_.*nii$', 'choose the deformation file', {}, pat);
-% bvecFile = spm_select(1, 'bvec', 'bvec', {}, pat);
-% bvalFile = spm_select(1, 'bval', 'bval', {}, pat);
-
 [Def, mat]     = get_def(diffeoFile);
-Def_y = zeros(size(Def));
-[xx, yy, zz] = ndgrid(1:size(Def, 1), 1:size(Def,2), 1:size(Def, 3));
-
-Def_y(:, :, :, 1) = mat(1, 1)*xx + mat(1, 2)*yy + mat(1, 3)*zz + mat(1, 4);
-Def_y(:, :, :, 2) = mat(2, 1)*xx + mat(2, 2)*yy + mat(2, 3)*zz + mat(2, 4);
-Def_y(:, :, :, 3) = mat(3, 1)*xx + mat(3, 2)*yy + mat(3, 3)*zz + mat(3, 4);
-
-Def_sub = Def - Def_y;
-
-
 %% Affine matrix
 % Aff = rotationVectorToMatrix(pi/12*[0, 0, 1]);
-J = spm_diffeo('def2jac', Def_sub);
+J = spm_diffeo('def2jac', Def);
 J = reshape(J, size(J, 1), size(J, 2), size(J, 3), []); 
 % JCell = mat2cell(J, ones(1, size(J, 1)), ones(1, size(J, 2)), ones(1, size(J, 3)), ...
 %     size(J, 4));
 % RCell = cellfun(@jac2R, JCell, 'UniformOutput', false); % each element is a 3*3 matrix.
-
-% Use Jacobian matrix to get the rotation with FS method.
 R = zeros(size(J));
 for aa = 1:size(J, 1)
     for bb = 1:size(J, 2)
@@ -107,8 +94,8 @@ clearvars RCell wMat_trans_cell
 S_reg_cell = cellfun(@(x) reshape(x, 1, 1, 1, []), S_reg_cell, 'UniformOutput', false);
 S_reg      = reshape(cat(1, S_reg_cell{:}), sizeX, sizeY, sizeZ, []);
 S_reg      = cat(4, b0_trans, S_reg);
-S_reg(isnan(S_reg)) = 0;
 
+S_reg(isnan(S_reg)) = 0;
 ni     = nifti;
 fname  = fullfile(pat, ['w', tit, ext]);
 ni.dat = file_array(fname, ...
@@ -122,8 +109,9 @@ create(ni);
 for aa = 1:size(ni.dat, 4)
     ni.dat(:, :, :, aa) = S_reg(:, :, :, aa);
 end
+out = fname;
 function S =  compose_signal(bmatrix, n_b0, Aff, w)
-Aff        = reshape(Aff, 3, 3);
-Aff = inv(Aff);
+Aff = reshape(Aff, 3, 3);
 F          = getDBFmatrix(bmatrix, n_b0, Aff);
 S          = F*w(:);
+
