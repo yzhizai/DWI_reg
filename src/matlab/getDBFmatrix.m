@@ -10,8 +10,10 @@ function F = getDBFmatrix(oriBmatrix, n_b0, Aff)
 %  F - the DBF matrix without the rows corresponding to b0 volume.  
 
 % Initialize parameters
-uniformOrientationFilePath = 'F:\Documents\GitHub\DWI_reg\src\matlab\Grad_dirs_300.txt';
-
+thisFilePath = mfilename('fullpath');
+[pat, ~, ~] = fileparts(thisFilePath);
+% uniformOrientationFilePath = 'F:\Documents\GitHub\DWI_reg\src\matlab\Grad_dirs_300.txt';
+uniformOrientationFilePath = fullfile(pat, 'Grad_dirs_300.txt');
 lambda1 = 1.5*10^-3;
 lambda2 = 3*10^-4;
 
