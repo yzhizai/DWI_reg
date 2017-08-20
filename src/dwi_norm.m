@@ -5,7 +5,9 @@
 % DWIs registration: bval: - cfg_files
 dwiFiles = cellstr(spm_select(Inf, 'nii', 'choose the dwi files'));
 nrun = numel(dwiFiles); % enter the number of runs here
-jobfile = {'F:\Documents\GitHub\DWI_reg\src\dwi_norm_job.m'};
+[pat, tit, ext] = fileparts(mfilename('fullpath'));
+% jobfile = {'F:\Documents\GitHub\DWI_reg\src\dwi_norm_job.m'};
+jobfile = {fullfile(pat, [tit, '_job.m'])};
 jobs = repmat(jobfile, 1, nrun);
 inputs = cell(4, nrun);
 for crun = 1:nrun
