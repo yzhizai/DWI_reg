@@ -1,4 +1,4 @@
-function main_final(dwiFile, diffeoFile, bvecFile, bvalFile)
+function main_final(dwiFile, diffeoFile, bvecFile, bvalFile, paraFile)
 
 %% Choose the dwi image and diffeofield file
 % dwiFile        = spm_select(1, 'nii', 'choose the diffusion MRI data');
@@ -92,7 +92,15 @@ clearvars wMat R wMat_trans
 
 
 % reconstruct the data into standard space.
-
+%% 
+% In order to make every individual dataset to the same space not only the
+% same anatomical space but also the q-space. Each image should be provided
+% the same diffusion gradients to reconstruct.
+if ~isempty(paraFile)
+    para = load(paraFile);
+    bmatrix = para.bmatrix;
+end
+%%
 S_reg_cell = cellfun(@(x, y)compose_signal(bmatrix, n_b0, x, y),RCell, wMat_trans_cell, 'UniformOutput', false);
 % S_reg = zeros(sizeX, sizeY, sizeZ, numel(VF_dwi) - n_b0);
 % for aa = 1:sizeX

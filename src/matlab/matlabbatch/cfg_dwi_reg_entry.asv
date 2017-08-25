@@ -41,8 +41,7 @@ branch1 = cfg_entry;
 branch1.name = 'individual q-space';
 branch1.tag = 'br1';
 branch1.strtype = 's';
-branch1.num = [1, Inf];
-branch1.val = {'individual q-space'};
+branch1.val = {};
 branch1.help = {'Transform individual datasets to their own q-space'};
 
 branch2 = cfg_branch;
@@ -51,9 +50,10 @@ branch2.tag = 'br2';
 branch2.val = {paraFile};
 branch2.help = {'Transform individual datasets to united q-space'};
 
-choice = cfg_choice;
+choice = cfg_menu;
 choice.name = 'q-space type';
 choice.tag = 'choice';
+choice.labels = {'individual q-space'};
 choice.values = {branch1, branch2};
 choice.help = {'choose the proper q-space'};
 
