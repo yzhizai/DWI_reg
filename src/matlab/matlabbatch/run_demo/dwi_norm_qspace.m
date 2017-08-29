@@ -18,8 +18,8 @@ for crun = 1:nrun
     mainName = strsplit(tit, '_');
     defName = fullfile(pat, ['y_y_', mainName{1}, '_T1', ext]);
     inputs{2, crun} = {defName}; % DWIs registration: Deformation Field: - cfg_files
-    inputs{3, crun} = {bvecName}; % DWIs registration: bvec: - cfg_files
-    inputs{4, crun} = {bvalName}; % DWIs registration: bval: - cfg_files
+    inputs{3, crun} = {bvalName}; % DWIs registration: bvec: - cfg_files
+    inputs{4, crun} = {bvecName}; % DWIs registration: bval: - cfg_files
 end
 spm('defaults', 'FMRI');
 spm_jobman('run', jobs, inputs{:});
