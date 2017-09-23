@@ -22,6 +22,7 @@ Def_sub = Def - Def_y;
 % Aff = rotationVectorToMatrix(pi/12*[0, 0, 1]);
 J = spm_diffeo('def2jac', Def_sub);
 J = reshape(J, size(J, 1), size(J, 2), size(J, 3), []); 
+J(isnan(J)) = 0;
 % JCell = mat2cell(J, ones(1, size(J, 1)), ones(1, size(J, 2)), ones(1, size(J, 3)), ...
 %     size(J, 4));
 % RCell = cellfun(@jac2R, JCell, 'UniformOutput', false); % each element is a 3*3 matrix.
