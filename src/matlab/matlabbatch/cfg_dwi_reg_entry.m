@@ -35,7 +35,9 @@ paraFile.name = 'para file:';
 paraFile.tag = 'paraFile';
 paraFile.filter = {'mat'};
 paraFile.num = [0, 1];
-paraFile.help = {'choose the parameter file'};
+paraFile.help = {'choose the parameter file', ...
+    'The .mat file should contains a variable called ''bmatrix''',...
+    'bmatrix = bval_bvec_to_matrix(bval, bvec, [2, 1, 3], [1, 1, 1])'};
 
 branch1 = cfg_entry;
 branch1.name = 'individual q-space';
