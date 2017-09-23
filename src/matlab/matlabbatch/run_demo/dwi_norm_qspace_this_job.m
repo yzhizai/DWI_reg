@@ -1,5 +1,5 @@
 %-----------------------------------------------------------------------
-% Job saved on 25-Aug-2017 09:17:41 by cfg_util (rev $Rev: 6134 $)
+% Job saved on 25-Aug-2017 09:21:44 by cfg_util (rev $Rev: 6134 $)
 % spm SPM - SPM12 (6225)
 % cfg_basicio BasicIO - Unknown
 % dwi_analysis DWI Analysis - Unknown
