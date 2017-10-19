@@ -1,0 +1,7 @@
+function wVec = getWeight_for_single_voxel(S, F)
+% Input:
+%   S - the diffusion attenuation signal
+%   F - the DBF matrix
+
+for 
+wVec = lsqnonneg(F, reshape(S, [], 1));
